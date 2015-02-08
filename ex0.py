@@ -3,7 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import StaleElementReferenceException
 
-import time, json
+import os, time, json
 
 browser = webdriver.Firefox()
 
@@ -19,6 +19,17 @@ def go_to_wph():
   # Click on the works progress button.  this gets us to the form.
   works_progress_button = browser.find_element_by_link_text('Work Progress History(Since Inception)')
   works_progress_button.click()
+
+def go_to_place(district="", mandal="", panchayat="", village=""):
+  go_to_wph()
+
+  for category, name in [("District",district),
+                         ("Mandal",mandal),
+                         ("Panchayat",panchayat),
+                         ("Village", village)]:
+    Select(browser.find_element_by_id(category)).select_by_visible_text(name)
+    time.sleep(0.5)
+
 
 def print_state():
   print "levels: {0}".format(levels)
@@ -80,12 +91,13 @@ def get_hierarchical_dict():
 if __name__ == '__main__':
   go_to_wph()
 
-  with open('villages_dict.json','r') as infile:
-    options = json.loads(infile.read())
-    levels = [0,0,0,0]
-    levels[0] = len(options.keys()) - 1
-    levels[1] = len(options[options.keys()[-1]]) - 1
-    infile.close()
+  if os.path.isfile('villages_dict.json'): 
+    with open('villages_dict.json','r') as infile:
+      options = json.loads(infile.read())
+      levels = [0,0,0,0]
+      levels[0] = len(options.keys()) - 1
+      levels[1] = len(options[options.keys()[-1]]) - 1
+      infile.close()
 
   hierarchical_wrapper() 
 
