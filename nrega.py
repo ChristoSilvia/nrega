@@ -16,7 +16,7 @@ def go_to_wph(option="Works Progress History(Since Inception)"):
 
   browser.find_element_by_link_text(option).click()
 
-def go_to_place(option="",district="", mandal="", panchayat="", village=""):
+def go_to_place(option="",district="", mandal="", panchayat="", village="", year=None):
   go_to_wph(option=option)
 
   for category, name in [("District",district),
@@ -25,6 +25,10 @@ def go_to_place(option="",district="", mandal="", panchayat="", village=""):
                          ("Village", village)]:
     Select(browser.find_element_by_id(category)).select_by_visible_text(name)
     time.sleep(0.5)
+
+  if year:
+    Select(browser.find_element_by_id("Financial")).select_by_visible_text(year)
+
   browser.find_element_by_id("go").click()
 
 
