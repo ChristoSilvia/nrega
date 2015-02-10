@@ -23,8 +23,9 @@ def go_to_place(option="",district="", mandal="", panchayat="", village="", year
                          ("Mandal",mandal),
                          ("Panchayat",panchayat),
                          ("Village", village)]:
-    Select(browser.find_element_by_id(category)).select_by_visible_text(name)
-    time.sleep(0.5)
+    option_box = Select(browser.find_element_by_id(category))
+    option_box.select_by_visible_text(name)
+    time.sleep(1.0)
 
   if year:
     Select(browser.find_element_by_id("Financial")).select_by_visible_text(year)
