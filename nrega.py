@@ -30,8 +30,6 @@ def go_to_place(option="",district="", mandal="", panchayat="", village="", year
   if year:
     Select(browser.find_element_by_id("Financial")).select_by_visible_text(year)
 
-  browser.find_element_by_id("go").click()
-
 
 def print_state():
   print "levels: {0}".format(levels)
