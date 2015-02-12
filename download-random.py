@@ -27,3 +27,11 @@ with open('data/villages_dict.json','r') as infile:
                     village=our_village,
                     year="2013-2014" )
 
+  nrega.browser.find_element_by_id("Excel").click()
+  """function ExportExcel()
+{
+	var url="/Nregs/FrontServlet?requestType=Common_engRH&actionVal=ExportToExcel&ExcelId=Overallworksstatus"
+		  
+		window.open(url, "newWin", "width=800,height=600,directories=yes,location=yes,menubar=yes,scrollbars=yes,status=yes,toolbar=yes,resizable=yes");   
+}
+"""

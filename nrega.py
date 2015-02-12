@@ -18,14 +18,27 @@ def go_to_wph(option="Works Progress History(Since Inception)"):
 
 def go_to_place(option="",district="", mandal="", panchayat="", village="", year=None):
   go_to_wph(option=option)
+  time.sleep(1.0)
+
+  number_of_fails = 0
 
   for category, name in [("District",district),
                          ("Mandal",mandal),
                          ("Panchayat",panchayat),
                          ("Village", village)]:
-    option_box = Select(browser.find_element_by_id(category))
-    option_box.select_by_visible_text(name)
-    time.sleep(1.0)
+    success = False
+    while not success:
+      try:
+        option_box = Select(browser.find_element_by_id(category))
+        option_box.select_by_visible_text(name)
+        time.sleep(1.0)
+      except:
+        if number_of_fails < 5: 
+          number_of_fails += 1
+          continue
+        else:
+          raise IOError("Broke on option %s trying %s" % (category, name))
+      success=True
 
   if year:
     Select(browser.find_element_by_id("Financial")).select_by_visible_text(year)
